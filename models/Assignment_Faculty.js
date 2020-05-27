@@ -2,31 +2,31 @@ const mongoose = require("mongoose");
 const uniqueValidator = require("mongoose-unique-validator");
 
 const AssignmentFaculty = new mongoose.Schema({
-    Asmt_ID: {
+  Faculty_ID: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    unique: true
-  },
-    Faculty_ID: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true
+    ref: "Faculty"
   },
   Sub_ID: {
     type: mongoose.Schema.Types.ObjectId,
-    required: true
-  },
-  Stud_ID: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true
+    required: true,
+    ref: "Subject"
   },
   Asmt_file: {
     type: File,
-    default: false,
+    required: true
+  },
+  Title: {
+    type: String,
+    required: true
+  },
+  Submision_Date: {
+    type: Date,
     required: true
   },
   Date: {
     type: Date,
-    default: false,
+    default: new Date(),
     required: true
   },
   Is_Active: {

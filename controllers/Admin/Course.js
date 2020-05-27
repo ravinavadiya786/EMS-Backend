@@ -5,7 +5,7 @@ const role = require("../../middleware/Role");
 
 //   role("Faculty")  role("Student")
 
-route.get("/", async (req, res) => {
+route.get("/", role(), async (req, res) => {
   try {
     const savedpost = await Course.find({});
     res.json(savedpost);
@@ -14,7 +14,7 @@ route.get("/", async (req, res) => {
   }
 });
 
-route.post("/",role, async (req, res) => {
+route.post("/", role(), async (req, res) => {
   try {
     await new Course({
       ...req.body
@@ -30,7 +30,7 @@ route.post("/",role, async (req, res) => {
   }
 });
 
-route.put("/",role, async (req, res) => {
+route.put("/", role(), async (req, res) => {
   try {
     const savedpost = await Course.findOneAndUpdate(
       { _id: req.body._id },
@@ -50,8 +50,8 @@ route.put("/",role, async (req, res) => {
   }
 });
 
-route.delete("/",role, async (req, res) => {
-    const { _id } = req.query;
+route.delete("/", role(), async (req, res) => {
+  const { _id } = req.query;
 
   if (!_id) return res.json({ Error: "_id is Required to Delete" });
   try {

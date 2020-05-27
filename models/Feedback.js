@@ -2,13 +2,13 @@ const mongoose = require("mongoose");
 const uniqueValidator = require("mongoose-unique-validator");
 
 const Feedback = new mongoose.Schema({
-    Fed_ID: {
+  Fed_ID: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
     unique: true
   },
   Email_ID: {
-    type:String,
+    type: String,
     required: true
   },
   Desc: {
@@ -19,12 +19,7 @@ const Feedback = new mongoose.Schema({
     type: Date,
     required: true
   },
-  Approved_By: {
-    type: String,
-    default: false,
-    required: true
-  },
-    is_active: {
+  Is_active: {
     type: String,
     default: false,
     required: true

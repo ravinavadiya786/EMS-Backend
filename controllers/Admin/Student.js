@@ -2,21 +2,20 @@ const route = require("express").Router();
 const student = require("../../models/Student");
 const role = require("../../middleware/Role");
 
-
-route.get("/",role, async (req, res) => {
+route.get("/", role(), async (req, res) => {
   try {
     const students = await student
       .find({})
       .select("-Face_Data")
       .populate(["Standard_id", "Course_id"]);
-    res.send(students);
+    res.json(students);
   } catch (err) {
     res.json(err);
   }
 });
 
 
-route.delete("/", role, async (req, res) => {
+route.delete("/", role(), async (req, res) => {
   const { _id } = req.query;
   if (!_id) return res.json({ Error: "_id is Required to Delete" });
   try {
@@ -35,7 +34,7 @@ route.delete("/", role, async (req, res) => {
   }
 });
 
-route.put("/", role, async (req, res) => {
+route.put("/", role(), async (req, res) => {
   try {
     const savedpost = await student.findOneAndUpdate(
       { _id: req.body._id },

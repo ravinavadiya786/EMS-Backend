@@ -30,7 +30,6 @@ route.post("/login", async (req, res) => {
 
   try {
     const exist = await student.findOne({ email: req.body.email  } , '_id Password');
-    console.log("student", exist);
 
     if (exist) {
 
@@ -39,7 +38,6 @@ route.post("/login", async (req, res) => {
     } else {
 
       const exist = await faculty.findOne({ email: req.body.email  } , '_id Password');
-      console.log("Faculty", exist);
 
       if (exist) {
 
@@ -48,7 +46,6 @@ route.post("/login", async (req, res) => {
       } else {
 
         const exist = await admin.findOne({ email: req.body.email  } , '_id Password');
-        console.log("admin", exist);
 
         if (exist) {
           success(exist._id, "Admin", exist.Password);

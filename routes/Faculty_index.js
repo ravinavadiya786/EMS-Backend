@@ -5,6 +5,7 @@ const Router = require("express").Router();
 
 const Attendance = require("../controllers/Faculty/Attendance");
 const Faculty = require("../controllers/Faculty/Faculty");
+const Test = require("../controllers/Faculty/Test");
 
 
 
@@ -12,6 +13,7 @@ const Faculty = require("../controllers/Faculty/Faculty");
 
 Router.use("/Attendance", Attendance);
 Router.use("/Faculty", Faculty);
+Router.use("/Test", Test);
 
 
 

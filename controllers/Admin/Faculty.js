@@ -3,7 +3,7 @@ const Faculty = require("../../models/Faculty");
 const role = require("../../middleware/Role");
 
 
-route.get("/", async (req, res) => {
+route.get("/", role(), async (req, res) => {
   try {
     const savedpost = await Faculty.find({})
       .select("-Face_Data")
@@ -15,7 +15,7 @@ route.get("/", async (req, res) => {
   }
 });
 
-route.delete("/", role, async (req, res) => {
+route.delete("/", role(), async (req, res) => {
   const { _id } = req.query;
   if (!_id) return res.json({ Error: "_id is Required to Delete" });
   try {
@@ -34,7 +34,7 @@ route.delete("/", role, async (req, res) => {
   }
 });
 
-route.put("/", role, async (req, res) => {
+route.put("/", role(), async (req, res) => {
   try {
     const savedpost = await Faculty.findOneAndUpdate(
       { _id: req.body._id },

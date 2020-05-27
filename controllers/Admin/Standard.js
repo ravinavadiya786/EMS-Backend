@@ -3,7 +3,7 @@ const Standard = require("../../models/Standard");
 const dateFormat = require("dateformat");
 const role = require("../../middleware/Role");
 
-route.get("/", async (req, res) => {
+route.get("/", role(), async (req, res) => {
   try {
     console.log("in statnrd");
     const savedpost = await Standard.find({}).populate("Course_ID");
@@ -24,7 +24,7 @@ route.get("/", async (req, res) => {
   }
 });
 
-route.post("/", role, async (req, res) => {
+route.post("/", role(), async (req, res) => {
   try {
     await new Standard({
       ...req.body
@@ -38,7 +38,7 @@ route.post("/", role, async (req, res) => {
   }
 });
 
-route.put("/", role, async (req, res) => {
+route.put("/", role(), async (req, res) => {
   try {
     const savedpost = await Standard.findOneAndUpdate(
       { _id: req.body._id },
@@ -58,7 +58,7 @@ route.put("/", role, async (req, res) => {
   }
 });
 
-route.delete("/", role, async (req, res) => {
+route.delete("/", role(), async (req, res) => {
   const { _id } = req.query;
   if (!_id) return res.json({ Error: "_id is Required to Delete" });
   try {

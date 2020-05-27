@@ -2,7 +2,7 @@ const route = require("express").Router();
 const Notice_Board = require("../../models/Notice_Board");
 const role = require("../../middleware/Role");
 
-route.get("/", async (req, res) => {
+route.get("/", role(), async (req, res) => {
   try {
     const savedpost = await Notice_Board.find({}).populate('Faculty_ID');
     res.json(savedpost);
@@ -11,7 +11,7 @@ route.get("/", async (req, res) => {
   }
 });
 
-route.post("/",role, async (req, res) => {
+route.post("/", role(), async (req, res) => {
   try {
     await new Notice_Board({
       ...req.body
@@ -25,7 +25,7 @@ route.post("/",role, async (req, res) => {
   }
 });
 
-route.put("/",role, async (req, res) => {
+route.put("/", role(), async (req, res) => {
   try {
     const savedpost = await Notice_Board.findOneAndUpdate(
       { _id: req.body._id },
@@ -45,7 +45,7 @@ route.put("/",role, async (req, res) => {
   }
 });
 
-route.delete("/", role,async (req, res) => {
+route.delete("/", role(), async (req, res) => {
   const { _id } = req.query;
 
   if (!_id) return res.json({ Error: "_id is Required to Delete" });

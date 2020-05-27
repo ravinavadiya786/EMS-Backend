@@ -2,7 +2,7 @@ const route = require("express").Router();
 const Event = require("../../models/Event");
 const role = require("../../middleware/Role");
 
-route.get("/",role, async (req, res) => {
+route.get("/", role(), async (req, res) => {
   try {
     const savedpost = await Event.find({});
     res.json(savedpost);
@@ -11,7 +11,7 @@ route.get("/",role, async (req, res) => {
   }
 });
 
-route.post("/",role,async (req, res) => {
+route.post("/", role(), async (req, res) => {
   try {
     await new Event({
       ...req.body
@@ -25,7 +25,7 @@ route.post("/",role,async (req, res) => {
   }
 });
 
-route.put("/",role, async (req, res) => {
+route.put("/", role(), async (req, res) => {
   try {
     const savedpost = await Event.findOneAndUpdate(
       { _id: req.body._id },
@@ -45,7 +45,7 @@ route.put("/",role, async (req, res) => {
   }
 });
 
-route.delete("/", role,async (req, res) => {
+route.delete("/", role(), async (req, res) => {
   const { _id } = req.query;
 
   if (!_id) return res.json({ Error: "_id is Required to Delete" });

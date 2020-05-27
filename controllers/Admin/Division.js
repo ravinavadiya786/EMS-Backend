@@ -2,16 +2,16 @@ const route = require("express").Router();
 const Division = require("../../models/Division");
 const role = require("../../middleware/Role");
 
-route.get("/", async (req, res) => {
+route.get("/", role(), async (req, res) => {
   try {
-    const savedpost = await Division.find({}).populate(['Course_ID','Std_ID']);
+    const savedpost = await Division.find({}).populate(['Course_ID', 'Std_ID']);
     res.json(savedpost);
   } catch (err) {
     res.json(err);
   }
 });
 
-route.post("/",role, async (req, res) => {
+route.post("/", role(), async (req, res) => {
   try {
     await new Division({
       ...req.body
@@ -25,7 +25,7 @@ route.post("/",role, async (req, res) => {
   }
 });
 
-route.put("/",role, async (req, res) => {
+route.put("/", role(), async (req, res) => {
   try {
     const savedpost = await Division.findOneAndUpdate(
       { _id: req.body._id },
@@ -45,7 +45,7 @@ route.put("/",role, async (req, res) => {
   }
 });
 
-route.delete("/",role, async (req, res) => {
+route.delete("/", role(), async (req, res) => {
 
   const { _id } = req.query;
 
