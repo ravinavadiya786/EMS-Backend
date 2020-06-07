@@ -9,10 +9,10 @@ module.exports = () => {
                 req.user = verified;
                 next();
             } else {
-                res.json({ Error: 'UnAuthrized User' });
+                res.status(501).json({ Error: 'UnAuthrized User' });    // do not chnages the satus code
             }
         } catch (error) {
-            res.json({ Error: 'Token is Invalid....' });
+            res.status(501).json({ Error: 'Token is Invalid....' });  // do not chnages the satus code
         }
     }
 }

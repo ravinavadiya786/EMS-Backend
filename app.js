@@ -3,6 +3,8 @@ const bodyParsher = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const path = require('path');
+
 dotenv.config();
 
 //  ------------controlllers----------
@@ -20,7 +22,7 @@ mongoose
     useFindAndModify: false
   })
   .then(() => {
-    console.log("database connection Is Successfully");
+    console.log(`database connection Is Successfully to ${process.env.DB_URL}`);
   })
   .catch(e => {
     console.log(e);
@@ -32,6 +34,10 @@ const app = express();
 app.use(bodyParsher.json());
 app.use(bodyParsher.urlencoded({ extended: true }));
 app.use(cors());
+app.use('/Assignment/Faculty', express.static(path.join(__dirname, './uploads/Assignment/Faculty')))
+app.use('/Assignment/Students', express.static(path.join(__dirname, './uploads/Assignment/Students')))
+app.use('/Event_Gellary', express.static(path.join(__dirname, './uploads/Event_Gellary')))
+
 
 // -----------------------All index Of Routing -------------------
 

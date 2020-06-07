@@ -11,6 +11,8 @@ const TimeTable = require("../controllers/Admin/TimeTable");
 const Student = require("../controllers/Admin/Student");
 const Faculty = require("../controllers/Admin/Faculty");
 const Event = require("../controllers/Admin/Event");
+const Event_Gallery = require("../controllers/Admin/Event_Gallery");
+
 
 
 
@@ -26,6 +28,9 @@ Router.use("/Subject", Subject);
 Router.use("/TimeTable", TimeTable);
 Router.use("/Notice_Borad", Notice_Borad);
 Router.use("/Event", Event);
+Router.use("/Event_Gallery", Event_Gallery);
+
+
 
 
 Router.use("*", (req, res) => res.json({ Error: "Route Not Found..." }));

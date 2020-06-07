@@ -18,6 +18,7 @@ const AssignmentStudent = new mongoose.Schema({
   },
   Submit_Date: {
     type: Date,
+    default: new Date(),
     required: true
   }
 });

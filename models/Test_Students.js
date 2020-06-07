@@ -20,6 +20,11 @@ const Test_Students = new mongoose.Schema({
         required: true,
         unique: true,
         ref: "Test_Master"
+    },
+    Completed_Date: {
+        type: Date,
+        default: Date.now,
+        required: true
     }
 });
 

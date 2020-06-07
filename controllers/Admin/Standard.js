@@ -5,7 +5,6 @@ const role = require("../../middleware/Role");
 
 route.get("/", role(), async (req, res) => {
   try {
-    console.log("in statnrd");
     const savedpost = await Standard.find({}).populate("Course_ID");
     // const data = savedpost.map(element => { return { ...element._doc , Created_On: dateFormat(element.Created_On, "dd-mm-yyyy")}
     //  })

@@ -29,10 +29,15 @@ route.get("/", role(), async (req, res) => {
 route.post("/", role(), async (req, res) => {
     try {
         const { Test_Name, Course_ID, Subject_ID, ArrQuestions } = req.body
+        function hasDuplicates(array) {
+            return (new Set(array)).size !== array.length;
+        }
+        if (hasDuplicates(ArrQuestions.map(item => item.Question))) return res.json({ Error: 'QUESTIONS  Is Dublicate!' })
 
         const Test_MasterData = await new Test_Master({
             Test_Name, Course_ID, Subject_ID, Faculty_ID: req.user._id
-        }).save();
+        }).save()
+
 
         if (Test_MasterData) {
             const final_Aryy = ArrQuestions.map(item => {
@@ -81,10 +86,13 @@ route.delete("/", role(), async (req, res) => {
     try {
         const savedpost = await Test_Master.deleteOne({ _id });
 
-        if (savedpost.n)
+
+        if (savedpost.n) {
+            const savedpost = await Test_Questions.deleteOne({ Test_Master_ID: _id });
             return res
                 .status(200)
                 .json({ Success: `${req.baseUrl.split("/")[2]} Are Deleted` });
+        }
 
         res
             .status(400)

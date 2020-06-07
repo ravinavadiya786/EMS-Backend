@@ -32,15 +32,19 @@ route.get("/", role(), async (req, res) => {
 
 
             if (Test_Results.length) {
-                 Test_Results = await Test_Students.find({ Student_ID: req.user._id, Test_Master_ID: Test_Results.map(item => item._id) })
-                   .populate({
-                       path : 'Test_Master_ID',
-                       select : 'Test_Name Subject_ID',
-                       populate : {
-                           path : 'Subject_ID',
-                           select : 'Sub_Name'
-                       }
-                   });
+                Test_Results = await Test_Students.find({ Student_ID: req.user._id, Test_Master_ID: Test_Results.map(item => item._id) })
+                    .populate({
+                        path: 'Test_Master_ID',
+                        select: 'Test_Name Subject_ID',
+                        populate: [{
+                            path: 'Subject_ID',
+                            select: 'Sub_Name'
+                        },
+                        {
+                            path: 'Faculty_ID',
+                            select: 'Name'
+                        }]
+                    });
 
             }
         }

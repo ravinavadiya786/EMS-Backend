@@ -1,6 +1,17 @@
 const route = require("express").Router();
 const Subject = require("../../models/Subject");
 const role = require("../../middleware/Role");
+// CourseWise
+
+route.get("/CourseWise/:id", role(), async (req, res) => {
+  try {
+    console.log(req.params.id)
+    const savedpost = await Subject.find({ Course_ID: req.params.id }).populate(['Course_ID', 'Std_ID']);
+    res.json(savedpost);
+  } catch (err) {
+    res.json(err);
+  }
+});
 
 route.get("/", role(), async (req, res) => {
   try {

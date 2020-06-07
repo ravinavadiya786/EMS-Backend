@@ -12,8 +12,13 @@ const AssignmentFaculty = new mongoose.Schema({
     required: true,
     ref: "Subject"
   },
+  Course_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "Course"
+  },
   Asmt_file: {
-    type: File,
+    type: String,
     required: true
   },
   Title: {
@@ -30,6 +35,11 @@ const AssignmentFaculty = new mongoose.Schema({
     required: true
   },
   Is_Active: {
+    type: Boolean,
+    default: true,
+    required: true
+  },
+  Is_Submitted: {
     type: Boolean,
     default: false,
     required: true

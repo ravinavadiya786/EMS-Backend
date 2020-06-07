@@ -9,8 +9,8 @@ const facejs = require("./Face");
 
 //login handle.....
 route.post("/login", async (req, res) => {
-  if(!req.body.email) return res.json({ Error: "email Is Empty" })
-  else if(!req.body.Password) return res.json({ Error: "Password Is Empty" })
+  if (!req.body.email) return res.json({ Error: "email Is Empty" })
+  else if (!req.body.Password) return res.json({ Error: "Password Is Empty" })
 
   function success(id, role, Password) {
     if (bcrypt.compareSync(req.body.Password, Password)) {
@@ -18,7 +18,7 @@ route.post("/login", async (req, res) => {
         { _id: id, role: role },
         process.env.TOKEN_SECRET,
         {
-          expiresIn: "1h"
+          expiresIn: "3d"
         }
       );
 
@@ -29,7 +29,7 @@ route.post("/login", async (req, res) => {
   }
 
   try {
-    const exist = await student.findOne({ email: req.body.email  } , '_id Password');
+    const exist = await student.findOne({ email: req.body.email }, '_id Password');
 
     if (exist) {
 
@@ -37,7 +37,7 @@ route.post("/login", async (req, res) => {
 
     } else {
 
-      const exist = await faculty.findOne({ email: req.body.email  } , '_id Password');
+      const exist = await faculty.findOne({ email: req.body.email }, '_id Password');
 
       if (exist) {
 
@@ -45,19 +45,19 @@ route.post("/login", async (req, res) => {
 
       } else {
 
-        const exist = await admin.findOne({ email: req.body.email  } , '_id Password');
+        const exist = await admin.findOne({ email: req.body.email }, '_id Password');
 
         if (exist) {
           success(exist._id, "Admin", exist.Password);
 
         } else {
-          res.status(400).json({ error: "User Not Found" });
+          res.json({ Error: "User Or Email Not Found" });
         }
       }
     }
   } catch (error) {
     console.log(error);
-    res.status(400).json({ error: error });
+    res.json({ Error: error });
   }
 });
 

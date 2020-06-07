@@ -5,7 +5,6 @@ const Test_Questions = new mongoose.Schema({
     Question_Name: {
         type: String,
         required: true,
-        unique: true
     },
     Answer: {
         type: Array,
