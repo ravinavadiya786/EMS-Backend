@@ -1,12 +1,21 @@
 const route = require("express").Router();
 const TimeTable = require("../../models/Time_Table");
 const role = require("../../middleware/Role");
+const Student = require("../../models/Student");
 
 route.get("/", role(), async (req, res) => {
   try {
-    const savedpost = await TimeTable.find({}).populate(['Course_ID', 'Std_ID', 'Subject_ID', 'Division_ID']);
+    let find_Query = {}
+    if (req.user.role === "Student") {
+      const students = await Student.findById(req.user._id)
+      find_Query['Course_ID'] = students.Course_id
+    }
+
+    const savedpost = await TimeTable.find({ ...find_Query }).populate(['Course_ID', 'Std_ID', 'Subject_ID', 'Division_ID']);
     res.json(savedpost);
   } catch (err) {
+    console.log(err)
+
     res.json(err);
   }
 });

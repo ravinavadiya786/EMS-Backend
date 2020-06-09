@@ -20,8 +20,19 @@ const upload = multer({ storage: storage });
 
 route.get("/", role(), async (req, res) => {
   try {
+    console.log(req.user.role)
     // { path: 'Student_Id', populate: { path: 'Course_id' }}populate('Faculty_Id','Name Course_id');.populate({ path: 'Student_Id', populate: { path: 'Course_id' }}, "Name Course_id Standard_id")
-    const savedpost = await Attendance.find({}).populate({ path: 'Faculty_Id', populate: { path: 'Faculty_Id' }, select: 'Name' }).populate({ path: 'Student_Id', populate: { path: 'Student_Id' }, select: 'Name' });
+    const savedpost = await Attendance.find({})
+      .populate([
+        { path: 'Faculty_Id', select: 'Name' },
+        {
+          path: 'Student_Id', select: 'Name Course_id Standard_id',
+          populate: [
+            { path: 'Course_id', select: 'Course_Name' },
+            { path: 'Standard_id', select: 'Course_Name Name' }
+          ]
+        }
+      ])
     res.json(savedpost);
   } catch (err) {
     res.json(err);
