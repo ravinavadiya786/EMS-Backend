@@ -20,9 +20,15 @@ const upload = multer({ storage: storage });
 
 route.get("/", role(), async (req, res) => {
   try {
-    console.log(req.user.role)
-    // { path: 'Student_Id', populate: { path: 'Course_id' }}populate('Faculty_Id','Name Course_id');.populate({ path: 'Student_Id', populate: { path: 'Course_id' }}, "Name Course_id Standard_id")
-    const savedpost = await Attendance.find({})
+    let find_Query = {}
+
+    if (req.user.role === "Faculty") {
+      find_Query['Faculty_Id'] = req.user._id
+
+    } else if (req.user.role === "Student") {
+      find_Query['Student_Id'] = req.user._id
+    }
+    const savedpost = await Attendance.find({ ...find_Query })
       .populate([
         { path: 'Faculty_Id', select: 'Name' },
         {
@@ -47,7 +53,7 @@ route.post("/", [role(), upload.single("picture")], async (req, res) => {
     let facedata = [];
 
     const savedpost = await student.find({}).select("Face_Data Name");
-    console.log('saved', savedpost)
+
     for (let i = 0; i < savedpost.length; i++) {
       const tmddata = { ...savedpost[i].Face_Data };
       const obj = {
@@ -56,7 +62,7 @@ route.post("/", [role(), upload.single("picture")], async (req, res) => {
       };
       facedata.push(obj);
     }
-    console.log(facedata);
+
     const Results = await facejs.facerec(facedata, "uploads/" + req.file.filename);
 
     //Finding STuents By Name By Results

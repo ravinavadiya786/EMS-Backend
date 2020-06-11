@@ -1,6 +1,5 @@
 const faceapi = require("face-api.js");
 const canvas = require("canvas");
-// require('@tensorflow/tfjs-node');
 const { Canvas, Image, ImageData, loadImage } = canvas;
 
 faceapi.env.monkeyPatch({ Canvas, Image, ImageData });
@@ -60,7 +59,6 @@ async function facerec(labeledFaceDescriptors, url) {
     const results = detections.map(d =>
       facematcher.findBestMatch(d.descriptor)
     );
-    console.log(results);
 
     const result = [];
     results.forEach(value => {
