@@ -82,6 +82,7 @@ route.post("/Student", async (req, res) => {
   if (Array.isArray(stud) && stud.length) {
     return res.json({ Error: "Email_ID Already Exist" });
   } else {
+
     const labeledFaceDescriptors = await facejs.loadlabel(imgurl, name, res);
     console.log("image captured", labeledFaceDescriptors);
 
@@ -100,7 +101,7 @@ route.post("/Student", async (req, res) => {
         Img_Path: imgurl,
         PhNo: PhNo,
         Password: hash,
-        Face_Data: JSON.stringify(labeledFaceDescriptors),
+        Face_Data: labeledFaceDescriptors,
         Standard_id,
         Course_id
       })
