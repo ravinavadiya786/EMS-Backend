@@ -71,23 +71,25 @@ async function facerec(labeledFaceDescriptors, url) {
   }
 }
 
-async function loadlabel(url, label,res) {
+async function loadlabel(url, label, res) {
   console.log("Load Label On face Strted....");
-try {
-  const img = await canvas.loadImage(url);
+  try {
+    const img = await canvas.loadImage(url);
 
-  const detections = await faceapi
-    .detectSingleFace(img)
-    .withFaceLandmarks()
-    .withFaceDescriptor();
+    const detections = await faceapi
+      .detectSingleFace(img)
+      .withFaceLandmarks()
+      .withFaceDescriptor();
 
-  if (detections)
-    return new faceapi.LabeledFaceDescriptors(label, [detections.descriptor]);
-  else false;
-} catch (error) {
-  res.json({ Error: error });
-}
-  
+    if (detections) {
+      const resultDetections = new faceapi.LabeledFaceDescriptors(label, [detections.descriptor])
+      return resultDetections;
+    }
+    else false;
+  } catch (error) {
+    return res.json({ Error: error });
+  }
+
 }
 
 module.exports = { loadlabel, facerec };

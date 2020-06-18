@@ -80,13 +80,13 @@ route.post("/Student", async (req, res) => {
   } = req.body;
   const stud = await student.find({ email: email }, "email");
   if (Array.isArray(stud) && stud.length) {
-    res.json({ Error: "Email_ID Already Exist" });
+    return res.json({ Error: "Email_ID Already Exist" });
   } else {
     const labeledFaceDescriptors = await facejs.loadlabel(imgurl, name, res);
-
     console.log("image captured", labeledFaceDescriptors);
+
     if (!labeledFaceDescriptors) {
-      res.json({ Error: "no image found" });
+      return res.json({ Error: "No Face found into your image" });
     } else {
       const hash = bcrypt.hashSync(Password, 8);
       const savedpost = new student({
@@ -100,7 +100,7 @@ route.post("/Student", async (req, res) => {
         Img_Path: imgurl,
         PhNo: PhNo,
         Password: hash,
-        Face_Data: labeledFaceDescriptors,
+        Face_Data: JSON.stringify(labeledFaceDescriptors),
         Standard_id,
         Course_id
       })
@@ -109,12 +109,11 @@ route.post("/Student", async (req, res) => {
           console.log(data);
           res.json({
             Success:
-              "Students Regstration Are Complted Now Go to Our EMS Website "
+              "Students Regstration Is Completed Now.. Go to Our EMS Website "
           });
         })
         .catch(error => {
           console.log(error);
-
           res.json({ Error: error });
         });
     }
@@ -140,13 +139,14 @@ route.post("/Faculty", async (req, res) => {
 
   const stud = await faculty.find({ email: email }, "email");
   if (Array.isArray(stud) && stud.length) {
-    res.json({ error: "Email_ID Already Exist" });
+    return res.json({ error: "Email_ID Already Exist" });
   } else {
     const labeledFaceDescriptors = await facejs.loadlabel(imgurl, name);
 
     console.log("image captured", labeledFaceDescriptors);
+
     if (!labeledFaceDescriptors) {
-      res.json({ error: "no image found" });
+      return res.json({ Error: "No Face found into your image" });
     } else {
       try {
         const hash = bcrypt.hashSync(Password, 8);
@@ -161,14 +161,14 @@ route.post("/Faculty", async (req, res) => {
           Img_Path: imgurl,
           PhNo: PhNo,
           Password: hash,
-          Face_Data: labeledFaceDescriptors,
+          Face_Data: JSON.stringify(labeledFaceDescriptors),
           Course_id
         }).save();
 
         console.log("savedpost", savedpost);
         res.json({
           Success:
-            "Faculty Regstration Are Complted Now Go to Our EMS Website "
+            "Faculty Regstration Is Completed Now.. Go to Our EMS Website "
         });
       } catch (error) {
         console.log(error)
