@@ -96,7 +96,9 @@ route.post("/Student", async (req, res) => {
         Fname: fname,
         DOB: dob,
         Age: age,
-        Address: JSON.parse(address),
+        // Address: JSON.parse(address),
+        Address:address,
+
         email: email,
         Img_Path: imgurl,
         PhNo: PhNo,
@@ -157,7 +159,10 @@ route.post("/Faculty", async (req, res) => {
           Fname: fname,
           DOB: dob,
           Age: age,
-          Address: JSON.parse(address),
+          // Address: JSON.parse(address),
+          Address: address,
+
+
           email: email,
           Img_Path: imgurl,
           PhNo: PhNo,
@@ -180,3 +185,4 @@ route.post("/Faculty", async (req, res) => {
 });
 
 module.exports = route;
+
