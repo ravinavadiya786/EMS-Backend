@@ -1,0 +1,12 @@
+to start the server 
+
+cmd - lt -h "http://serverless.social" -p 8050 --subdomain education
+
+
+replace with-
+http://localhost:8050
+
+to-
+https://education.serverless.social
+
+

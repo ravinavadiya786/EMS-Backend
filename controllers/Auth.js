@@ -184,5 +184,6 @@ route.post("/Faculty", async (req, res) => {
   }
 });
 
+
 module.exports = route;
 
