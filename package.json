@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "concurrently \"node app.js\" \"lt -h http://serverless.social -p 8050 --subdomain education\""
+    "start": "node app.js"
   },
   "author": "",
   "license": "ISC",
